@@ -420,3 +420,18 @@ a.back_to_top {
     left:0;
     z-index:1;
 }
+
+.footer_bottom {
+    width:100%;
+    text-align:center;
+    border-bottom: 1px solid #333;
+    line-height:0.1em;
+    margin:35px 0 70px;
+}
+
+.footer_bottom img {
+    position:absolute;
+    top:-10px;
+    left:50%;
+    margin-left:-66px;
+}
