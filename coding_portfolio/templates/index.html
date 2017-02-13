@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% load custom_filters %}
+
+{% block extend %}
+<meta name="google-site-verification" content="2TpyPv3DtCVIhIY2J42Nr3emu_wbg7MJBYE1kBGnooQ" />
+<meta name="google-site-verification" content="JQn9nHTSRS1cRd4WXs5_KdMSHyQPLpse-7WI7guNa_0" />
+{% endblock %}
+{% block title %}Home {% endblock %}
+
+{% block slide %}
+    {% include "slide.html" %}
+{% endblock %}
+
+{% block content %}
+    {% for language in languages %}
+        <div id="{{ language.id }}">
+            <h1 style="font-weight:bold;">{{ language.name }}</h1>
+            {% for project_triplet in language.get_projects|getsubdivisions:"3" %}
+                <div class="row">
+                    {% for project in project_triplet %}
+                    <div class="col-md-4">
+                        <a href="{{project.get_absolute_url}}" style="text-decoration:none;">
+                        <img class="thumbnail project_thumbnail" alt="Thumbnail" src="{{project.get_thumbnail}}">
+                        <h2 style="text-align:center;">{{project.name}}</h2></a>
+                    </div>
+                    {% endfor %}
+                </div><br/> <br/>
+            {% empty %}
+            <h3>No projects found.</h3>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <div id="about">
+        <h1 style="font-weight:bold;">About Me</h1>
+        <ol>
+        {% for question_answer in question_answers %}
+            <li>
+                <h3>
+                    <span id="question-{{ question_answer.id }}" style="border-bottom:solid 1px; margin-left:20px; cursor: pointer">{{ question_answer.question|capfirst }}</span>
+                </h3>
+            </li>
+            <h4> <span id="answer-{{ question_answer.id }}" style="color:green; margin:10px 30px; display:none;">{{ question_answer.answer|capfirst }}</span></h4>
+        {% endfor %}
+        </ol>
+    </div>
+
+    <script>
+        $( "[id*='question']" ).click(function() {
+            var id = $(this).attr('id').replace('question', '');
+            if ($("#answer"+id).css("display") == "none") {
+                $("#answer"+id).css("display", "block");
+            }
+            else {
+                $("#answer"+id).css("display", "none");
+            }
+
+        });
+    </script>
+{% endblock %}
